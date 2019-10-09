@@ -15,9 +15,23 @@ The processing module contains the PE of the architecture.
 Each PE:
 
 * Stores values in a 2 LINE FIFO and use 9 registers to create the neighborhood 3x3 of each variable. The variables are u (input), y (output) and x (state equation).
-* Uses u, y and x to calculate the state equation.
+* Uses u, y(n) and x(n) to calculate the state equation. (A is a propagation kernel, B is a control kernel and I is a bias)
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=f_%7Bij%7D%28n%29%3D%20-x_%7Bij%7D%28n%29%2B%5Csum_%7B%28k%2C%20l%29%20%5Cin%20C%28i%2C%20j%29%7Da_%7Bkl%7Dy_%7Bkl%7D%28n%29%2B%0A%5Csum_%7B%28k%2C%20l%29%20%5Cin%20C%28i%2Cj%29%7Db_%7Bkl%7Du_%7Bkl%7D%20%2B%20I&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![equation](http://www.sciweavers.org/tex2img.php?eq=f_{ij}(n)%3D%20-x_{ij}(n)%2B\sum_{(k,%20l)%20\in%20C(i,%20j)}a_{kl}y_{kl}(n)%2B%0A\sum_{(k,%20l)%20\in%20C(i,j)}b_{kl}u_{kl}%20%2B%20I&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+
+* Use euler integration method to compute x(n+1)
+
+![equation](http://www.sciweavers.org/tex2img.php?eq=x_%7Bij%7D%28n%2B1%29%3Dx_%7Bij%7D%28n%29%2Bh%5Ccdot%20f_%7Bij%7D%28n%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+
+* Use a symmetric linear saturation function to produces a value y(n+1) in the range [-1,1].
+
+![equation](http://www.sciweavers.org/tex2img.php?eq=y_%7Bij%7D%28n%2B1%29%3D%5Cfrac%7B1%7D%7B2%7D%28%7Cx_%7Bij%7D%28n%2B1%29%2B1%7C-%7Cx_%7Bij%7D%28n%2B1%29-1%7C%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+
+OBS: In first iteration (PE[0]), y(0)=x(0)=u 
+
+## Postprocessing
+
+The postprocessing stage of the accelerator binarizes the CeNN output and generates an RGB output image. We compare the 15-bit output of the last PE in the processing stage to a user-provided threshold (using buttons) in the range [−1,1] to produce a binary output image.
 
 # Hierarchy 
 
