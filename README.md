@@ -19,15 +19,15 @@ Each PE:
 * Stores values in a 2 LINE FIFO and use 9 registers to create the neighborhood 3x3 of each variable. The variables are u (input), y (output) and x (state equation).
 * Uses u, y(n) and x(n) to calculate the state equation. (A is a propagation kernel, B is a control kernel and I is a bias)
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=f_{ij}(n)%3D%20-x_{ij}(n)%2B\sum_{(k,%20l)%20\in%20C(i,%20j)}a_{kl}y_{kl}(n)%2B%0A\sum_{(k,%20l)%20\in%20C(i,j)}b_{kl}u_{kl}%20%2B%20I&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![equation](/images/state_equation.png)
 
 * Use euler integration method to compute x(n+1)
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=x_%7Bij%7D%28n%2B1%29%3Dx_%7Bij%7D%28n%29%2Bh%5Ccdot%20f_%7Bij%7D%28n%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![equation](/images/euler_equation.png)
 
 * Use a symmetric linear saturation function to produces a value y(n+1) in the range [-1,1].
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=y_%7Bij%7D%28n%2B1%29%3D%5Cfrac%7B1%7D%7B2%7D%28%7Cx_%7Bij%7D%28n%2B1%29%2B1%7C-%7Cx_%7Bij%7D%28n%2B1%29-1%7C%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![equation](/images/saturation_equation.png)
 
 OBS: In first iteration (PE[0]), y(0)=x(0)=u 
 
