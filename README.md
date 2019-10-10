@@ -4,6 +4,8 @@ Codes in SystemVerilog for CeNN hardware implementation on FPGA.
 
 The CeNN process is divided in 3 stages:
 
+![CeNN_modules](/images/hardware.png)
+
 ## Preprocessing
 
 Transforms to input RGB to Grayscale images (CeNN operates in one channel).
@@ -28,6 +30,8 @@ Each PE:
 ![equation](http://www.sciweavers.org/tex2img.php?eq=y_%7Bij%7D%28n%2B1%29%3D%5Cfrac%7B1%7D%7B2%7D%28%7Cx_%7Bij%7D%28n%2B1%29%2B1%7C-%7Cx_%7Bij%7D%28n%2B1%29-1%7C%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
 OBS: In first iteration (PE[0]), y(0)=x(0)=u 
+
+![PE](/images/PE.png)
 
 ## Postprocessing
 
