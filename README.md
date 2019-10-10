@@ -61,7 +61,9 @@ CeNN.sv:
       
       -> FIFO_x.sv                //FIFO for state variable (x)
       
-      -> Reg_Mask.sv              //create a mask 3x3 for each input (u, y and x)
+      -> Reg_Mask.sv              //create a mask 3x3 for each input (u and y)
+      
+      -> Reg_x.sv                 //Delay to x (sync with u and y)
       
       -> Neuron.sv:               //Process to state equation, euler integration and saturation equation.
       
